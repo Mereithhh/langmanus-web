@@ -38,7 +38,7 @@ export default function HomePage() {
   return (
     <div className="flex w-full flex-col items-center justify-center">
       <div className="flex min-h-screen min-w-page flex-col items-center">
-        <header className="fixed left-0 right-0 top-0 flex h-16 w-full items-center px-4">
+        <header className="fixed left-0 right-0 top-0 flex h-16 w-full items-center px-4 z-[100]">
           <AppHeader />
         </header>
         <main className="mb-48 mt-16 px-4">
@@ -50,7 +50,7 @@ export default function HomePage() {
         </main>
         <footer
           className={cn(
-            "fixed bottom-4 transition-transform duration-500 ease-in-out",
+            "fixed bottom-4 z-[200] transition-transform duration-500 ease-in-out",
             messages.length === 0 ? "w-[640px] translate-y-[-34vh]" : "w-page",
           )}
         >

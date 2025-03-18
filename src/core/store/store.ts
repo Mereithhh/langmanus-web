@@ -10,18 +10,69 @@ import {
 import { clone } from "../utils";
 import { WorkflowEngine } from "../workflow";
 
+export type ModelSettings = {
+  reasoningModel: string;
+  reasoningApiKey: string;
+  reasoningBaseUrl: string;
+  basicModel: string;
+  basicApiKey: string;
+  basicBaseUrl: string;
+  vlModel: string;
+  vlApiKey: string;
+  vlBaseUrl: string;
+};
+
+const defaultModelSettings: ModelSettings = {
+  reasoningModel: "qwq-plus",
+  reasoningApiKey: "",
+  reasoningBaseUrl: "https://dashscope.aliyuncs.com/compatible-mode/v1",
+  basicModel: "qwen-max-latest",
+  basicApiKey: "",
+  basicBaseUrl: "https://dashscope.aliyuncs.com/compatible-mode/v1",
+  vlModel: "qwen2.5-vl-72b-instruct",
+  vlApiKey: "",
+  vlBaseUrl: "https://dashscope.aliyuncs.com/compatible-mode/v1",
+};
+
+// Load model settings from localStorage
+const loadModelSettings = (): ModelSettings => {
+  if (typeof window === "undefined") return defaultModelSettings;
+
+  try {
+    const savedSettings = localStorage.getItem("langmanus.config.modelSettings");
+    if (savedSettings) {
+      return { ...defaultModelSettings, ...JSON.parse(savedSettings) };
+    }
+  } catch (e) {
+    console.error("Failed to load model settings from localStorage", e);
+  }
+
+  return defaultModelSettings;
+};
+
 export const useStore = create<{
   messages: Message[];
   responding: boolean;
   state: {
     messages: { role: string; content: string }[];
   };
+  modelSettings: ModelSettings;
+  setModelSettings: (settings: Partial<ModelSettings>) => void;
 }>(() => ({
   messages: [],
   responding: false,
   state: {
     messages: [],
   },
+  modelSettings: loadModelSettings(),
+  setModelSettings: (settings) =>
+    useStore.setState((state) => {
+      const newSettings = { ...state.modelSettings, ...settings };
+      if (typeof window !== "undefined") {
+        localStorage.setItem("langmanus.config.modelSettings", JSON.stringify(newSettings));
+      }
+      return { modelSettings: newSettings };
+    }),
 }));
 
 export function addMessage(message: Message) {

@@ -1,4 +1,3 @@
-import { env } from "~/env";
 
 import { type Message } from "../messaging";
 import { fetchStream } from "../sse";
@@ -12,7 +11,7 @@ export function chatStream(
   options: { abortSignal?: AbortSignal } = {},
 ) {
   return fetchStream<ChatEvent>(
-    (env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000/api") + "/chat/stream",
+    "http://localhost:8000/api" + "/chat/stream",
     {
       body: JSON.stringify({
         messages: [...state.messages, userMessage],
