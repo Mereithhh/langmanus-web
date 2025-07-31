@@ -28,3 +28,19 @@ http://localhost:5173/?mock
 3. 输入问题，直接就用 mock.txt 的内容返回了。
 
 ![](./mock.jpg)
+
+
+## 连接自定义的 API Server
+
+1. url 中不要带 `mock` 了。
+
+2. 环境变量或者在 `.env` 文件中配置：
+```
+# 指向你的 fastapi server
+NEXT_PUBLIC_API_URL=http://localhost:8000/api
+```
+
+实际请求的地址就是： 
+```
+env.NEXT_PUBLIC_API_URL + "/chat/stream"
+```
