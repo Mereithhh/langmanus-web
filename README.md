@@ -44,3 +44,8 @@ NEXT_PUBLIC_API_URL=http://localhost:8000/api
 ```
 env.NEXT_PUBLIC_API_URL + "/chat/stream"
 ```
+
+## Make Mock Text
+```
+python scripts/make_mock_text.py
+```
