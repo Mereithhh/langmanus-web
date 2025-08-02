@@ -1,12 +1,14 @@
+import { githubUrl, title } from "~/config";
+
 export function AppHeader() {
   return (
     <div>
       <a
         className="font-serif text-lg font-extralight text-gray-500"
-        href="https://github.com/langmanus/langmanus"
+        href={githubUrl}
         target="_blank"
       >
-        LangManus
+        {title}
       </a>
     </div>
   );

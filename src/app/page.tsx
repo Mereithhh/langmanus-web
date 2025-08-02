@@ -9,6 +9,7 @@ import { cn } from "~/core/utils";
 import { AppHeader } from "./_components/AppHeader";
 import { InputBox } from "./_components/InputBox";
 import { MessageHistoryView } from "./_components/MessageHistoryView";
+import { welcomeText, welcomeTitle } from "~/config";
 
 export default function HomePage() {
   const abortControllerRef = useRef<AbortController | null>(null);
@@ -57,11 +58,10 @@ export default function HomePage() {
           {messages.length === 0 && (
             <div className="flex w-[640px] translate-y-[-32px] flex-col">
               <h3 className="mb-2 text-center text-3xl font-medium">
-                👋 Hello, there!
+                {welcomeTitle}
               </h3>
               <div className="px-4 text-center text-lg text-gray-400">
-                LangManus, built on cutting-edge language models, helps you
-                search on web, browse information, and handle complex tasks.
+                {welcomeText}
               </div>
             </div>
           )}

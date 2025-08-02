@@ -26,12 +26,12 @@ export function InputBox({
   const [imeStatus, setImeStatus] = useState<"active" | "inactive">("inactive");
   const saveConfig = useCallback(() => {
     localStorage.setItem(
-      "langmanus.config.inputbox",
+      "odr.config.inputbox",
       JSON.stringify({ deepThinkingMode, searchBeforePlanning }),
     );
   }, [deepThinkingMode, searchBeforePlanning]);
   useEffect(() => {
-    const config = localStorage.getItem("langmanus.config.inputbox");
+    const config = localStorage.getItem("odr.config.inputbox");
     if (config) {
       const { deepThinkingMode, searchBeforePlanning } = JSON.parse(config);
       setDeepThinkMode(deepThinkingMode);
@@ -99,7 +99,7 @@ export function InputBox({
       </div>
       <div className="flex items-center px-4 py-2">
         <div className="flex flex-grow items-center gap-2">
-          <button
+          {/* <button
             className={cn(
               "flex h-8 items-center gap-2 rounded-2xl border px-4 text-sm transition-shadow hover:shadow",
               deepThinkingMode
@@ -112,8 +112,8 @@ export function InputBox({
           >
             <Atom className="h-4 w-4" />
             <span>Deep Think</span>
-          </button>
-          <button
+          </button> */}
+          {/* <button
             className={cn(
               "flex h-8 items-center rounded-2xl border px-4 text-sm transition-shadow hover:shadow",
               searchBeforePlanning
@@ -126,7 +126,7 @@ export function InputBox({
           >
             <GlobalOutlined className="h-6 w-6" />
             <span>Search</span>
-          </button>
+          </button> */}
         </div>
         <div className="flex flex-shrink-0 items-center gap-2">
           <button
