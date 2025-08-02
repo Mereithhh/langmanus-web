@@ -136,7 +136,7 @@ mock_data = [
         "tool_name": "crawl_tool",
         "payload": {
           "url": "https://www.google.com",
-          "title": "爬宠"
+          "title": "crawl_title"
         }
       }
     ]
@@ -288,6 +288,9 @@ def make_mock_data(mock_data):
 
 if __name__ == "__main__":
   import os
+  # 读取本地的 temp.json
+  with open("./scripts/temp.json", "r") as f:
+    mock_data = json.load(f)
   text = make_mock_data(mock_data)
   # 当前路径上面的
   current_dir = os.path.dirname(os.path.abspath(__file__))

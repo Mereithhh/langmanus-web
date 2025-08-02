@@ -13,9 +13,9 @@ export async function* chatStream(
     let data: string | undefined;
     for (const line of lines) {
       if (line.startsWith("event: ")) {
-        event = line.split("event: ")[1];
+        event = line.slice(7);
       } else if (line.startsWith("data: ")) {
-        data = line.split("data: ")[1];
+        data = line.slice(6);
       }
     }
     if (event && data) {
@@ -24,9 +24,15 @@ export async function* chatStream(
       } else {
         await timeout(0);
       }
+      let data_obj: ChatEvent["data"] | undefined;
+      try {
+         data_obj = JSON.parse(data) as ChatEvent["data"];
+      } catch (err) {
+        console.log("parse data error", data);
+      }
       yield {
         type: event as ChatEvent["type"],
-        data: JSON.parse(data) as ChatEvent["data"],
+        data: data_obj,
       } as ChatEvent;
     }
   }
