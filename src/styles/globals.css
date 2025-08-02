@@ -93,3 +93,7 @@ textarea {
     @apply list-decimal pl-4;
   }
 }
+
+.markdown p {
+  overflow-x: scroll;
+}
