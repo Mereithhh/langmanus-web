@@ -78,6 +78,7 @@ mock_data = [
       "payload": {
         "title": "run code 1",
         "code": py_code_1,
+        "result": "执行结果，执行结果，执行结果",
         "stdout": "result_111",
         "stderr": "",
       }
@@ -111,13 +112,31 @@ mock_data = [
       "tool_name": "tavily_search",
         "payload": {
           "query": "What is the capital of France?",
+          "result": json.dumps([
+            {
+              "title": "title 1",
+              "url": "https://www.google.com",
+            },
+            {
+              "title": "title 2",
+              "url": "https://www.google.com/1",
+            },
+            ],ensure_ascii=False)
         }
       },
       {
         "type": "tool_call",
         "tool_name": "show_text",
         "payload": {
-          "text": "搜索完毕",
+          "text": "搜索完毕，看一下具体的页面内容",
+        }
+      },
+      {
+        "type": "tool_call",
+        "tool_name": "crawl_tool",
+        "payload": {
+          "url": "https://www.google.com",
+          "title": "爬宠"
         }
       }
     ]

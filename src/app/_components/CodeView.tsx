@@ -1,4 +1,4 @@
-import { PythonOutlined, DownOutlined, UpOutlined, PlayCircleOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
+import { PythonOutlined, DownOutlined, UpOutlined, PlayCircleOutlined, ExclamationCircleOutlined, CheckOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
@@ -9,13 +9,14 @@ import { type ToolCallTask } from "~/core/workflow";
 export function CodeToolCallView({
   task,
 }: {
-  task: ToolCallTask<{ code: string, title: string, stdout: string, stderr: string }>;
+  task: ToolCallTask<{ code: string, title: string, stdout?: string, stderr?: string, result?: string; }>;
 }) {
   const [showStdout, setShowStdout] = useState(false);
   const [showStderr, setShowStderr] = useState(false);
 
-  const hasStdout = task.payload.input.stdout?.trim();
-  const hasStderr = task.payload.input.stderr?.trim();
+  const hasStdout = Boolean(task.payload.input?.stdout?.trim());
+  const hasStderr = Boolean(task.payload.input?.stderr?.trim());
+  const hasResult = Boolean(task.payload.input?.result?.trim());
 
   return (
     <div>
@@ -33,6 +34,20 @@ export function CodeToolCallView({
           <SyntaxHighlighter language="python" style={docco}>
             {task.payload.input.code}
           </SyntaxHighlighter>
+        </div>
+      )}
+
+      {hasResult && (
+        <div className="mt-2 mb-4">
+          <CheckOutlined  className="h-3 w-3 mr-2" />
+          <span className="inline-block mb-2">Code Result</span>
+          <div className={'block mx-4 '}>
+            <div className="max-h-[300px] max-w-[640px] overflow-auto rounded-lg border bg-gray-50 p-3">
+              <pre className="text-sm text-gray-700 whitespace-pre-wrap font-mono">
+                {task.payload.input.result}
+              </pre>
+            </div>
+          </div>
         </div>
       )}
 

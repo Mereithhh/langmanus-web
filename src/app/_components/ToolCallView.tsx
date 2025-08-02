@@ -60,17 +60,17 @@ function BrowserToolCallView({
 }
 
 const pageCache = new LRUCache<string, string>({ max: 100 });
-function CrawlToolCallView({ task }: { task: ToolCallTask<{ url: string }> }) {
-  const results = useMemo(() => {
-    try {
-      return JSON.parse(task.payload.output ?? "") ?? null;
-    } catch (error) {
-      return null;
-    }
-  }, [task.payload.output]);
-  const title = useMemo(() => {
-    return pageCache.get(task.payload.input.url);
-  }, [task.payload.input.url]);
+function CrawlToolCallView({ task }: { task: ToolCallTask<{ url: string , title?: string}> }) {
+  // const results = useMemo(() => {
+  //   try {
+  //     return JSON.parse(task.payload.output ?? "") ?? null;
+  //   } catch (error) {
+  //     return null;
+  //   }
+  // }, [task.payload.output]);
+  // const title = useMemo(() => {
+  //   return pageCache.get(task.payload.input.url);
+  // }, [task.payload.input.url]);
   return (
     <div>
       <div className="flex items-center gap-2">
@@ -85,7 +85,7 @@ function CrawlToolCallView({ task }: { task: ToolCallTask<{ url: string }> }) {
             target="_blank"
             rel="noopener noreferrer"
           >
-            &quot;{title ?? task.payload.input.url}&quot;
+            &quot;{task.payload.input?.title ?? task.payload.input.url}&quot;
           </a>
         </div>
       </div>
@@ -96,11 +96,12 @@ function CrawlToolCallView({ task }: { task: ToolCallTask<{ url: string }> }) {
 function TravilySearchToolCallView({
   task,
 }: {
-  task: ToolCallTask<{ query: string }>;
+  task: ToolCallTask<{ query: string , result?: string}>;
 }) {
   const results = useMemo(() => {
     try {
-      const results = JSON.parse(task.payload.output ?? "") ?? [];
+      const results = JSON.parse(task.payload.output ?? task.payload.input?.result ?? "") ?? [];
+      console.log("results", results);
       results.forEach((result: { url: string; title: string }) => {
         pageCache.set(result.url, result.title);
       });
@@ -108,7 +109,7 @@ function TravilySearchToolCallView({
     } catch (error) {
       return [];
     }
-  }, [task.payload.output]);
+  }, [task.payload.output, task.payload.input?.result]);
   return (
     <div>
       <div className="flex items-center gap-2">
@@ -122,7 +123,7 @@ function TravilySearchToolCallView({
           </span>
         </div>
       </div>
-      {task.state !== "pending" && (
+      {results.length> 0 && (
         <div className="flex flex-col gap-2 pt-1">
           <div className="flex items-center gap-2">
             <div>
@@ -135,8 +136,8 @@ function TravilySearchToolCallView({
             </div>
           </div>
           <ul className="flex flex-col gap-2 text-sm">
-            {results.map((result: { url: string; title: string }) => (
-              <li key={result.url} className="list-item list-inside pl-6">
+            {results.map((result: { url: string; title: string }, index: number) => (
+              <li key={result.url + "_" + index} className="list-item list-inside pl-6">
                 <a
                   className="flex items-center gap-2"
                   target="_blank"
