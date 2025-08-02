@@ -1,51 +1,81 @@
 event: start_of_workflow
-data: {"workflow_id": "cc625486-989a-4078-b58e-41493d73a66a", "input": [{"role": "user", "content": "你好"}]}
+data: {"workflow_id": "233e7ebd-54f7-44e9-8c3e-4d788048286f", "input": [{"role": "user", "content": "你好"}]}
 
 event: start_of_agent
-data: {"agent_name": "planner", "agent_id": "dc2885fe-112b-45dd-9d1c-92f70c2e1374"}
+data: {"agent_name": "planner", "agent_id": "91d3537a-9347-4a0c-8d2e-c1de46b26ef4"}
 
 event: start_of_llm
 data: {"agent_name": "planner"}
 
 event: message
-data: {"message_id": "7ae40dfa-6c98-4461-b8c5-279287123309", "delta": {"content": "{\"steps\": [{\"title\": \"Create a Python sandbox to work in\", \"description\": \"Desc1\"}, {\"title\": \"Search for and download World Bank data on gross savings as % of GDP\", \"description\": \"Desc2\"}, {\"title\": \"Process the data to identify countries meeting the criteria\", \"description\": \"Desc3\"}, {\"title\": \"Format the final answer as requested\", \"description\": \"Desc4\"}]}"}}
+data: {"message_id": "88473986-6169-4844-8311-29799e3da1ae", "delta": {"content": "{\"steps\": [{\"title\": \"Create a Python sandbox to work in\", \"description\": \"Desc1\"}, {\"title\": \"Search for and download World Bank data on gross savings as % of GDP\", \"description\": \"Desc2\"}, {\"title\": \"Process the data to identify countries meeting the criteria\", \"description\": \"Desc3\"}, {\"title\": \"Format the final answer as requested\", \"description\": \"Desc4\"}]}"}}
 
 event: end_of_llm
 data: {"agent_name": "planner"}
 
 event: end_of_agent
-data: {"agent_name": "planner", "agent_id": "dc2885fe-112b-45dd-9d1c-92f70c2e1374"}
+data: {"agent_name": "planner", "agent_id": "91d3537a-9347-4a0c-8d2e-c1de46b26ef4"}
 
 event: start_of_agent
-data: {"agent_name": "researcher", "agent_id": "da322f92-c2bf-4e67-8f39-de6090c4c605"}
+data: {"agent_name": "researcher", "agent_id": "dd0b1164-2a92-444a-a032-dac333e32303"}
 
 event: start_of_llm
 data: {"agent_name": "researcher"}
 
 event: message
-data: {"message_id": "d249fbc9-305e-4e1f-81eb-29d07d615f09", "delta": {"content": "# 可以渲染 markdown\n **11111**"}}
+data: {"message_id": "c2ecc907-c199-4e48-aa1b-dc2ffb0bf740", "delta": {"content": "# 可以渲染 markdown\n **11111**"}}
 
 event: end_of_llm
 data: {"agent_name": "researcher"}
 
 event: end_of_agent
-data: {"agent_name": "researcher", "agent_id": "da322f92-c2bf-4e67-8f39-de6090c4c605"}
+data: {"agent_name": "researcher", "agent_id": "dd0b1164-2a92-444a-a032-dac333e32303"}
 
 event: start_of_agent
-data: {"agent_name": "reporter", "agent_id": "08b081a8-7fc6-479e-a9f7-e61373eaaa9e"}
+data: {"agent_name": "researcher", "agent_id": "21cfc30b-ebce-4e48-aff3-587e70eead69"}
+
+event: start_of_llm
+data: {"agent_name": "researcher"}
+
+event: tool_call
+data: {"tool_call_id": "e1fbfc7f-27f7-4b26-b99b-657e8883b1f3", "tool_name": "code", "tool_input": {"title": "run code 1", "code": "def determinant(matrix):\n    \"\"\"计算方阵的行列式\"\"\"\n    n = len(matrix)\n    \n    # 检查是否为方阵\n    if not all(len(row) == n for row in matrix):\n        raise ValueError(\"矩阵必须是方阵\")\n    \n    # 1x1 矩阵\n    if n == 1:\n        return matrix[0][0]\n    \n    # 2x2 矩阵\n    if n == 2:\n        return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0]\n    \n    # 使用递归计算更大矩阵的行列式（按第一行展开）\n    det = 0\n    for j in range(n):\n        # 创建 (n-1)x(n-1) 子矩阵\n        submatrix = [[matrix[i][k] for k in range(n) if k != j] \n                     for i in range(1, n)]\n        # 计算代数余子式\n        det += ((-1) ** j) * matrix[0][j] * determinant(submatrix)\n    \n    return det\n", "stdout": "result_111", "stderr": ""}}
+
+event: tool_call
+data: {"tool_call_id": "42d3554f-eb6b-48ac-9b15-cd30bd5acd79", "tool_name": "show_text", "tool_input": {"text": "这个结果很好，让我来继续运行下面的代码"}}
+
+event: tool_call
+data: {"tool_call_id": "607c9cd8-e246-4633-94ae-889a21cac9b7", "tool_name": "code", "tool_input": {"title": "run code 2", "code": "print(hello_world)", "stdout": "", "stderr": "expression is not defined"}}
+
+event: tool_call
+data: {"tool_call_id": "6f7c0a22-4b44-4437-9482-778a0018e301", "tool_name": "show_text", "tool_input": {"text": "很好，接下来让我搜索一下"}}
+
+event: tool_call
+data: {"tool_call_id": "f32a4092-4aed-4c6e-a4f0-f50712e7485e", "tool_name": "tavily_search", "tool_input": {"query": "What is the capital of France?"}}
+
+event: tool_call
+data: {"tool_call_id": "15522445-d3ec-4406-ada0-867c60cd8d87", "tool_name": "show_text", "tool_input": {"text": "搜索完毕"}}
+
+event: end_of_llm
+data: {"agent_name": "researcher"}
+
+event: end_of_agent
+data: {"agent_name": "researcher", "agent_id": "21cfc30b-ebce-4e48-aff3-587e70eead69"}
+
+event: start_of_agent
+data: {"agent_name": "reporter", "agent_id": "a108a292-2e61-462b-8e98-3c9c2d876ee5"}
 
 event: start_of_llm
 data: {"agent_name": "reporter"}
 
 event: message
-data: {"message_id": "f741da5d-f1c4-499e-bad5-62fab58ffaa1", "delta": {"content": "总结一下"}}
+data: {"message_id": "cd9aa51e-1c41-4d11-924f-bace513065dc", "delta": {"content": "总结一下"}}
 
 event: end_of_llm
 data: {"agent_name": "reporter"}
 
 event: end_of_agent
-data: {"agent_name": "reporter", "agent_id": "08b081a8-7fc6-479e-a9f7-e61373eaaa9e"}
+data: {"agent_name": "reporter", "agent_id": "a108a292-2e61-462b-8e98-3c9c2d876ee5"}
 
 event: end_of_workflow
-data: {"workflow_id": "cc625486-989a-4078-b58e-41493d73a66a"}
+data: {"workflow_id": "233e7ebd-54f7-44e9-8c3e-4d788048286f"}
 

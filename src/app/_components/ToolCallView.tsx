@@ -9,7 +9,10 @@ import { useMemo } from "react";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
 
+import { CodeToolCallView } from "./CodeView";
+// eslint-disable-next-line import/order
 import { type ToolCallTask } from "~/core/workflow";
+import { Markdown } from "./Markdown";
 
 export function ToolCallView({ task }: { task: ToolCallTask }) {
   if (task.payload.toolName === "tavily_search") {
@@ -20,8 +23,19 @@ export function ToolCallView({ task }: { task: ToolCallTask }) {
     return <BrowserToolCallView task={task as ToolCallTask<any>} />;
   } else if (task.payload.toolName === "python_repl_tool") {
     return <PythonReplToolCallView task={task as ToolCallTask<any>} />;
+  } else if (task.payload.toolName === "code") {
+    return <CodeToolCallView task={task as ToolCallTask<any>} />;
   } else if (task.payload.toolName === "bash_tool") {
     return <BashToolCallView task={task as ToolCallTask<any>} />;
+  } else if (task.payload.toolName === "show_text") {
+    return <Markdown
+      className="pl-6 opacity-70"
+      style={{
+        fontSize: "smaller",
+      }}
+    >
+      {(task.payload.input as any).text}
+    </Markdown>
   }
   return <div>{task.payload.toolName}</div>;
 }
