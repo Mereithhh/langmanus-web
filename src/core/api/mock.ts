@@ -20,9 +20,9 @@ export async function* chatStream(
     }
     if (event && data) {
       if (event === "message") {
-        await timeout(0);
+        await timeout(100);
       } else {
-        await timeout(0);
+        await timeout(100);
       }
       let data_obj: ChatEvent["data"] | undefined;
       try {

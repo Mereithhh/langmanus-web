@@ -156,6 +156,9 @@ function PlanTaskView({ task }: { task: ThinkingTask }) {
 }
 
 function getStepName(step: WorkflowStep) {
+  if (step.displayName) {
+    return step.displayName;
+  }
   switch (step.agentName) {
     case "browser":
       return "Browsing Web";

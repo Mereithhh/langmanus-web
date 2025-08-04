@@ -67,6 +67,7 @@ mock_data = [
   },
   {
     "agent": "researcher",
+    "display_name": "自定义名称",
     "content": "# 可以渲染 markdown\n **11111**"
   },
   {
@@ -81,7 +82,8 @@ mock_data = [
         "result": "执行结果，执行结果，执行结果",
         "stdout": "result_111",
         "stderr": "",
-      }
+      },
+      "streaming_mode": True,
       },
       {
         "type": "tool_call",
@@ -128,8 +130,9 @@ mock_data = [
         "type": "tool_call",
         "tool_name": "show_text",
         "payload": {
-          "text": "搜索完毕，看一下具体的页面内容",
-        }
+          "text": "搜索完毕，看一下具体的页面内容,搜索完毕，看一下具体的页面内容,搜索完毕，看一下具体的页面内容,搜索完毕，看一下具体的页面内容,搜索完毕，看一下具体的页面内容,搜索完毕，看一下具体的页面内容,搜索完毕，看一下具体的页面内容,搜索完毕，看一下具体的页面内容,搜索完毕，看一下具体的页面内容",
+        },
+        "streaming_mode": True,
       },
       {
         "type": "tool_call",
@@ -153,15 +156,34 @@ mock_data = [
 # 3. bash_tool
 # 4. crawl_tool
 # 5. tavily_search
-def make_tool_call(tool_name: str, payload: dict):
-  return {
-    "event": "tool_call", 
-    "data" :{
-      "tool_call_id": str(uuid.uuid4()),
-      "tool_name": tool_name,
-      "tool_input": payload,
-    }
-  }
+def make_tool_call(tool_name: str, payload: dict, streaming_mode: bool = False):
+  result = []
+  tool_id = str(uuid.uuid4())
+  if (not streaming_mode):
+    result.append({
+      "event": "tool_call", 
+      "data" :{
+        "tool_call_id": tool_id,
+        "tool_name": tool_name,
+        "tool_input": payload,
+      }
+    })
+  else:
+    chunk_size = 20
+    for key, value in payload.items():
+      if (isinstance(value, str)):
+        for i in range(0, len(value), chunk_size):
+          result.append({
+            "event": "tool_call", 
+            "data" :{
+              "tool_call_id": tool_id,
+              "tool_name": tool_name,
+              "delta_input": {
+                key: value[i:i+chunk_size]
+              },
+            }
+          })
+  return result
 
 def make_message(message_id: str, content: str):
   return {
@@ -177,10 +199,9 @@ def make_message(message_id: str, content: str):
 def make_contents(contents: list):
   result_list = []
   for content in contents:
-    print("content: ",content)
     if "type" in content and  content.get("type",None) == "tool_call":
 
-      result_list.append(make_tool_call(content["tool_name"], content["payload"]))
+      result_list.extend(make_tool_call(content["tool_name"], content["payload"], content.get("streaming_mode", False)))
     else:
       result_list.append(make_message(str(uuid.uuid4()), content))
   return result_list
@@ -212,6 +233,7 @@ def make_agent_data(agent_item: dict):
       "event": "start_of_agent",
       "data": {
         "agent_name": agent_item["agent"],
+        "display_name": agent_item.get("display_name", None),
         "agent_id": agent_id,
       },
     }
@@ -221,6 +243,7 @@ def make_agent_data(agent_item: dict):
       "event": "start_of_llm",
       "data": {
         "agent_name": agent_item["agent"],
+        "display_name": agent_item.get("display_name", None),
       },
     }
   )
@@ -289,8 +312,8 @@ def make_mock_data(mock_data):
 if __name__ == "__main__":
   import os
   # 读取本地的 temp.json
-  with open("./scripts/temp.json", "r") as f:
-    mock_data = json.load(f)
+  # with open("./scripts/temp.json", "r") as f:
+  #   mock_data = json.load(f)
   text = make_mock_data(mock_data)
   # 当前路径上面的
   current_dir = os.path.dirname(os.path.abspath(__file__))

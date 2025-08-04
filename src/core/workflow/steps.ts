@@ -9,6 +9,7 @@ interface GenericWorkflowStep<T extends string> {
 export interface AgenticStep extends GenericWorkflowStep<"agentic"> {
   agentId: string;
   agentName: string;
+  displayName?: string;
 }
 
 export type WorkflowStep = AgenticStep;

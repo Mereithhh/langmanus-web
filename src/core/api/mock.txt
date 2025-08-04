@@ -1,36 +1,210 @@
 event: start_of_workflow
-data: {"workflow_id": "326ad6cf-3ada-4a56-b714-c69e86ec4b44", "input": [{"role": "user", "content": "你好"}]}
+data: {"workflow_id": "e83f480e-b017-4945-b46c-f2a98ffd02fe", "input": [{"role": "user", "content": "你好"}]}
 
 event: start_of_agent
-data: {"agent_name": "planner", "agent_id": "95843580-b07e-4b32-9670-b5122a8e563a"}
+data: {"agent_name": "planner", "display_name": null, "agent_id": "d7c406d3-5615-44e2-9958-ee3dee72c8d8"}
 
 event: start_of_llm
-data: {"agent_name": "planner"}
+data: {"agent_name": "planner", "display_name": null}
 
 event: message
-data: {"message_id": "7045c085-a40a-4491-a57a-61a848f9a17e", "delta": {"content": "{\"steps\": [{\"title\": \"Create a Python sandbox to work in\"}, {\"title\": \"Search for and download World Bank data on gross savings as % of GDP\"}, {\"title\": \"Process the data to identify countries meeting the criteria\"}, {\"title\": \"Format the final answer as requested\"}]}"}}
+data: {"message_id": "ebc66407-da0b-4978-b368-68621b08e806", "delta": {"content": "{\"steps\": [{\"title\": \"Create a Python sandbox to work in\", \"description\": \"Desc1\"}, {\"title\": \"Search for and download World Bank data on gross savings as % of GDP\", \"description\": \"Desc2\"}, {\"title\": \"Process the data to identify countries meeting the criteria\", \"description\": \"Desc3\"}, {\"title\": \"Format the final answer as requested\", \"description\": \"Desc4\"}]}"}}
 
 event: end_of_llm
 data: {"agent_name": "planner"}
 
 event: end_of_agent
-data: {"agent_name": "planner", "agent_id": "95843580-b07e-4b32-9670-b5122a8e563a"}
+data: {"agent_name": "planner", "agent_id": "d7c406d3-5615-44e2-9958-ee3dee72c8d8"}
 
 event: start_of_agent
-data: {"agent_name": "reporter", "agent_id": "167e717b-ffaa-4277-8aef-cc98242509d8"}
+data: {"agent_name": "researcher", "display_name": "自定义名称", "agent_id": "2588d8ff-82cd-41cd-8fc3-218b4a6e4e70"}
 
 event: start_of_llm
-data: {"agent_name": "reporter"}
+data: {"agent_name": "researcher", "display_name": "自定义名称"}
 
 event: message
-data: {"message_id": "66cdc526-ef16-4791-8402-c5c5716cdb80", "delta": {"content": "# Conversation Summary\n\nThe conversation focused on identifying countries with gross savings exceeding 35% of GDP for every year from 2001-2010 according to World Bank data. Multiple approaches were attempted to access the World Bank API and data, including:\n\n1. Creating Python sandboxes to access World Bank data through various API methods\n2. Attempting to download bulk data from the World Bank\n3. Using a browsing agent to search for and analyze the data\n\nAfter several attempts with different API formats and approaches, the browsing agent successfully retrieved the data and identified the countries meeting the criteria.\n\n# Final Answer\n\n$\\boxed{Algeria, Bahrain, Brunei Darussalam, China, Gabon, Iran, Islamic Republic of, Malaysia, Macao SAR China, Oman, Qatar, Saudi Arabia, Singapore}$"}}
+data: {"message_id": "0d0f3ea5-98e7-4cf1-8e5f-78b3e9fc8f34", "delta": {"content": "# 可以渲染 markdown\n **11111**"}}
+
+event: end_of_llm
+data: {"agent_name": "researcher"}
+
+event: end_of_agent
+data: {"agent_name": "researcher", "agent_id": "2588d8ff-82cd-41cd-8fc3-218b4a6e4e70"}
+
+event: start_of_agent
+data: {"agent_name": "researcher", "display_name": null, "agent_id": "398f9001-6a10-4a6b-b845-4f758f6ad6f9"}
+
+event: start_of_llm
+data: {"agent_name": "researcher", "display_name": null}
+
+event: tool_call
+data: {"tool_call_id": "370a50ef-38f2-4a80-8ca9-6d4c8f395513", "tool_name": "code", "delta_input": {"title": "run code 1"}}
+
+event: tool_call
+data: {"tool_call_id": "370a50ef-38f2-4a80-8ca9-6d4c8f395513", "tool_name": "code", "delta_input": {"code": "def determinant(matr"}}
+
+event: tool_call
+data: {"tool_call_id": "370a50ef-38f2-4a80-8ca9-6d4c8f395513", "tool_name": "code", "delta_input": {"code": "ix):\n    \"\"\"计算方阵的行列式"}}
+
+event: tool_call
+data: {"tool_call_id": "370a50ef-38f2-4a80-8ca9-6d4c8f395513", "tool_name": "code", "delta_input": {"code": "\"\"\"\n    n = len(matr"}}
+
+event: tool_call
+data: {"tool_call_id": "370a50ef-38f2-4a80-8ca9-6d4c8f395513", "tool_name": "code", "delta_input": {"code": "ix)\n    \n    # 检查是否为"}}
+
+event: tool_call
+data: {"tool_call_id": "370a50ef-38f2-4a80-8ca9-6d4c8f395513", "tool_name": "code", "delta_input": {"code": "方阵\n    if not all(le"}}
+
+event: tool_call
+data: {"tool_call_id": "370a50ef-38f2-4a80-8ca9-6d4c8f395513", "tool_name": "code", "delta_input": {"code": "n(row) == n for row "}}
+
+event: tool_call
+data: {"tool_call_id": "370a50ef-38f2-4a80-8ca9-6d4c8f395513", "tool_name": "code", "delta_input": {"code": "in matrix):\n        "}}
+
+event: tool_call
+data: {"tool_call_id": "370a50ef-38f2-4a80-8ca9-6d4c8f395513", "tool_name": "code", "delta_input": {"code": "raise ValueError(\"矩阵"}}
+
+event: tool_call
+data: {"tool_call_id": "370a50ef-38f2-4a80-8ca9-6d4c8f395513", "tool_name": "code", "delta_input": {"code": "必须是方阵\")\n    \n    # 1"}}
+
+event: tool_call
+data: {"tool_call_id": "370a50ef-38f2-4a80-8ca9-6d4c8f395513", "tool_name": "code", "delta_input": {"code": "x1 矩阵\n    if n == 1:"}}
+
+event: tool_call
+data: {"tool_call_id": "370a50ef-38f2-4a80-8ca9-6d4c8f395513", "tool_name": "code", "delta_input": {"code": "\n        return matr"}}
+
+event: tool_call
+data: {"tool_call_id": "370a50ef-38f2-4a80-8ca9-6d4c8f395513", "tool_name": "code", "delta_input": {"code": "ix[0][0]\n    \n    # "}}
+
+event: tool_call
+data: {"tool_call_id": "370a50ef-38f2-4a80-8ca9-6d4c8f395513", "tool_name": "code", "delta_input": {"code": "2x2 矩阵\n    if n == 2"}}
+
+event: tool_call
+data: {"tool_call_id": "370a50ef-38f2-4a80-8ca9-6d4c8f395513", "tool_name": "code", "delta_input": {"code": ":\n        return mat"}}
+
+event: tool_call
+data: {"tool_call_id": "370a50ef-38f2-4a80-8ca9-6d4c8f395513", "tool_name": "code", "delta_input": {"code": "rix[0][0] * matrix[1"}}
+
+event: tool_call
+data: {"tool_call_id": "370a50ef-38f2-4a80-8ca9-6d4c8f395513", "tool_name": "code", "delta_input": {"code": "][1] - matrix[0][1] "}}
+
+event: tool_call
+data: {"tool_call_id": "370a50ef-38f2-4a80-8ca9-6d4c8f395513", "tool_name": "code", "delta_input": {"code": "* matrix[1][0]\n    \n"}}
+
+event: tool_call
+data: {"tool_call_id": "370a50ef-38f2-4a80-8ca9-6d4c8f395513", "tool_name": "code", "delta_input": {"code": "    # 使用递归计算更大矩阵的行列式"}}
+
+event: tool_call
+data: {"tool_call_id": "370a50ef-38f2-4a80-8ca9-6d4c8f395513", "tool_name": "code", "delta_input": {"code": "（按第一行展开）\n    det = 0"}}
+
+event: tool_call
+data: {"tool_call_id": "370a50ef-38f2-4a80-8ca9-6d4c8f395513", "tool_name": "code", "delta_input": {"code": "\n    for j in range("}}
+
+event: tool_call
+data: {"tool_call_id": "370a50ef-38f2-4a80-8ca9-6d4c8f395513", "tool_name": "code", "delta_input": {"code": "n):\n        # 创建 (n-"}}
+
+event: tool_call
+data: {"tool_call_id": "370a50ef-38f2-4a80-8ca9-6d4c8f395513", "tool_name": "code", "delta_input": {"code": "1)x(n-1) 子矩阵\n       "}}
+
+event: tool_call
+data: {"tool_call_id": "370a50ef-38f2-4a80-8ca9-6d4c8f395513", "tool_name": "code", "delta_input": {"code": " submatrix = [[matri"}}
+
+event: tool_call
+data: {"tool_call_id": "370a50ef-38f2-4a80-8ca9-6d4c8f395513", "tool_name": "code", "delta_input": {"code": "x[i][k] for k in ran"}}
+
+event: tool_call
+data: {"tool_call_id": "370a50ef-38f2-4a80-8ca9-6d4c8f395513", "tool_name": "code", "delta_input": {"code": "ge(n) if k != j] \n  "}}
+
+event: tool_call
+data: {"tool_call_id": "370a50ef-38f2-4a80-8ca9-6d4c8f395513", "tool_name": "code", "delta_input": {"code": "                   f"}}
+
+event: tool_call
+data: {"tool_call_id": "370a50ef-38f2-4a80-8ca9-6d4c8f395513", "tool_name": "code", "delta_input": {"code": "or i in range(1, n)]"}}
+
+event: tool_call
+data: {"tool_call_id": "370a50ef-38f2-4a80-8ca9-6d4c8f395513", "tool_name": "code", "delta_input": {"code": "\n        # 计算代数余子式\n "}}
+
+event: tool_call
+data: {"tool_call_id": "370a50ef-38f2-4a80-8ca9-6d4c8f395513", "tool_name": "code", "delta_input": {"code": "       det += ((-1) "}}
+
+event: tool_call
+data: {"tool_call_id": "370a50ef-38f2-4a80-8ca9-6d4c8f395513", "tool_name": "code", "delta_input": {"code": "** j) * matrix[0][j]"}}
+
+event: tool_call
+data: {"tool_call_id": "370a50ef-38f2-4a80-8ca9-6d4c8f395513", "tool_name": "code", "delta_input": {"code": " * determinant(subma"}}
+
+event: tool_call
+data: {"tool_call_id": "370a50ef-38f2-4a80-8ca9-6d4c8f395513", "tool_name": "code", "delta_input": {"code": "trix)\n    \n    retur"}}
+
+event: tool_call
+data: {"tool_call_id": "370a50ef-38f2-4a80-8ca9-6d4c8f395513", "tool_name": "code", "delta_input": {"code": "n det\n"}}
+
+event: tool_call
+data: {"tool_call_id": "370a50ef-38f2-4a80-8ca9-6d4c8f395513", "tool_name": "code", "delta_input": {"result": "执行结果，执行结果，执行结果"}}
+
+event: tool_call
+data: {"tool_call_id": "370a50ef-38f2-4a80-8ca9-6d4c8f395513", "tool_name": "code", "delta_input": {"stdout": "result_111"}}
+
+event: tool_call
+data: {"tool_call_id": "21db36cc-569a-45d3-86cf-2a75dee1beb9", "tool_name": "show_text", "tool_input": {"text": "这个结果很好，让我来继续运行下面的代码"}}
+
+event: tool_call
+data: {"tool_call_id": "531449c3-feb2-40a8-b18d-73169fa667a8", "tool_name": "code", "tool_input": {"title": "run code 2", "code": "print(hello_world)", "stdout": "", "stderr": "expression is not defined"}}
+
+event: tool_call
+data: {"tool_call_id": "afff7d60-490a-422a-bc11-d29f43c6f6b7", "tool_name": "show_text", "tool_input": {"text": "很好，接下来让我搜索一下"}}
+
+event: tool_call
+data: {"tool_call_id": "98d88a1d-3ec2-4be2-8868-244d7fea2fc7", "tool_name": "tavily_search", "tool_input": {"query": "What is the capital of France?", "result": "[{\"title\": \"title 1\", \"url\": \"https://www.google.com\"}, {\"title\": \"title 2\", \"url\": \"https://www.google.com/1\"}]"}}
+
+event: tool_call
+data: {"tool_call_id": "894398d6-c9ef-4549-a781-e4e15336afd4", "tool_name": "show_text", "delta_input": {"text": "搜索完毕，看一下具体的页面内容,搜索完毕"}}
+
+event: tool_call
+data: {"tool_call_id": "894398d6-c9ef-4549-a781-e4e15336afd4", "tool_name": "show_text", "delta_input": {"text": "，看一下具体的页面内容,搜索完毕，看一下"}}
+
+event: tool_call
+data: {"tool_call_id": "894398d6-c9ef-4549-a781-e4e15336afd4", "tool_name": "show_text", "delta_input": {"text": "具体的页面内容,搜索完毕，看一下具体的页"}}
+
+event: tool_call
+data: {"tool_call_id": "894398d6-c9ef-4549-a781-e4e15336afd4", "tool_name": "show_text", "delta_input": {"text": "面内容,搜索完毕，看一下具体的页面内容,"}}
+
+event: tool_call
+data: {"tool_call_id": "894398d6-c9ef-4549-a781-e4e15336afd4", "tool_name": "show_text", "delta_input": {"text": "搜索完毕，看一下具体的页面内容,搜索完毕"}}
+
+event: tool_call
+data: {"tool_call_id": "894398d6-c9ef-4549-a781-e4e15336afd4", "tool_name": "show_text", "delta_input": {"text": "，看一下具体的页面内容,搜索完毕，看一下"}}
+
+event: tool_call
+data: {"tool_call_id": "894398d6-c9ef-4549-a781-e4e15336afd4", "tool_name": "show_text", "delta_input": {"text": "具体的页面内容,搜索完毕，看一下具体的页"}}
+
+event: tool_call
+data: {"tool_call_id": "894398d6-c9ef-4549-a781-e4e15336afd4", "tool_name": "show_text", "delta_input": {"text": "面内容"}}
+
+event: tool_call
+data: {"tool_call_id": "caa6b9f3-bf8d-4d5b-9c90-9939f5fa96bc", "tool_name": "crawl_tool", "tool_input": {"url": "https://www.google.com", "title": "crawl_title"}}
+
+event: end_of_llm
+data: {"agent_name": "researcher"}
+
+event: end_of_agent
+data: {"agent_name": "researcher", "agent_id": "398f9001-6a10-4a6b-b845-4f758f6ad6f9"}
+
+event: start_of_agent
+data: {"agent_name": "reporter", "display_name": null, "agent_id": "5b738eec-c69d-4c37-b623-038b4afcef6b"}
+
+event: start_of_llm
+data: {"agent_name": "reporter", "display_name": null}
+
+event: message
+data: {"message_id": "baa7a230-bfbd-4486-8d9b-d15cf66f553a", "delta": {"content": "总结一下"}}
 
 event: end_of_llm
 data: {"agent_name": "reporter"}
 
 event: end_of_agent
-data: {"agent_name": "reporter", "agent_id": "167e717b-ffaa-4277-8aef-cc98242509d8"}
+data: {"agent_name": "reporter", "agent_id": "5b738eec-c69d-4c37-b623-038b4afcef6b"}
 
 event: end_of_workflow
-data: {"workflow_id": "326ad6cf-3ada-4a56-b714-c69e86ec4b44"}
+data: {"workflow_id": "e83f480e-b017-4945-b46c-f2a98ffd02fe"}
 

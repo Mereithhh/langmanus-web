@@ -101,7 +101,6 @@ function TravilySearchToolCallView({
   const results = useMemo(() => {
     try {
       const results = JSON.parse(task.payload.output ?? task.payload.input?.result ?? "") ?? [];
-      console.log("results", results);
       results.forEach((result: { url: string; title: string }) => {
         pageCache.set(result.url, result.title);
       });

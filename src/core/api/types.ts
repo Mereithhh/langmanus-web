@@ -24,7 +24,7 @@ export interface EndOfWorkflowEvent
 export interface StartOfAgentEvent
   extends GenericChatEvent<
     "start_of_agent",
-    { agent_id: string; agent_name: string }
+    { agent_id: string; agent_name: string; display_name?: string }
   > {}
 
 export interface EndOfAgentEvent
@@ -33,7 +33,7 @@ export interface EndOfAgentEvent
 export interface ToolCallEvent
   extends GenericChatEvent<
     "tool_call",
-    { tool_call_id: string; tool_name: string; tool_input: Record<string, any> }
+    { tool_call_id: string; tool_name: string; tool_input: Record<string, any> , delta_input?: Record<string, any>}
   > {}
 
 export interface ToolCallResultEvent
