@@ -15,9 +15,9 @@ import { type ToolCallTask } from "~/core/workflow";
 import { Markdown } from "./Markdown";
 
 export function ToolCallView({ task }: { task: ToolCallTask }) {
-  if (task.payload.toolName === "tavily_search") {
-    return <TravilySearchToolCallView task={task as ToolCallTask<any>} />;
-  } else if (task.payload.toolName === "crawl_tool") {
+  if (task.payload.toolName === "google_search") {
+    return <GoogleSearchToolCallView task={task as ToolCallTask<any>} />;
+  } else if (task.payload.toolName === "scrape") {
     return <CrawlToolCallView task={task as ToolCallTask<any>} />;
   } else if (task.payload.toolName === "browser") {
     return <BrowserToolCallView task={task as ToolCallTask<any>} />;
@@ -60,17 +60,7 @@ function BrowserToolCallView({
 }
 
 const pageCache = new LRUCache<string, string>({ max: 100 });
-function CrawlToolCallView({ task }: { task: ToolCallTask<{ url: string , title?: string}> }) {
-  // const results = useMemo(() => {
-  //   try {
-  //     return JSON.parse(task.payload.output ?? "") ?? null;
-  //   } catch (error) {
-  //     return null;
-  //   }
-  // }, [task.payload.output]);
-  // const title = useMemo(() => {
-  //   return pageCache.get(task.payload.input.url);
-  // }, [task.payload.input.url]);
+function CrawlToolCallView({ task }: { task: ToolCallTask<{ result?: string, url: string, title?: string}> }) {
   return (
     <div>
       <div className="flex items-center gap-2">
@@ -93,18 +83,37 @@ function CrawlToolCallView({ task }: { task: ToolCallTask<{ url: string , title?
   );
 }
 
-function TravilySearchToolCallView({
+
+interface GoogleResult {
+  credits: number;
+  organic: {
+    link: string;
+    title: string;
+    snippet: string;
+    position: number;
+  }[];
+  relatedSearches: {
+    query: string
+  }[];
+  searchParameters: {
+    engine: string;
+    gl: string;
+    hl: string;
+    q: string;
+    type: string;
+  }
+}
+
+function GoogleSearchToolCallView({
   task,
 }: {
-  task: ToolCallTask<{ query: string , result?: string}>;
+  task: ToolCallTask<{ q: string , result?: string}>;
 }) {
   const results = useMemo(() => {
     try {
-      const results = JSON.parse(task.payload.output ?? task.payload.input?.result ?? "") ?? [];
-      results.forEach((result: { url: string; title: string }) => {
-        pageCache.set(result.url, result.title);
-      });
-      return results;
+      const result: GoogleResult = JSON.parse(task.payload.output ?? task.payload.input?.result ?? "") ?? {};
+      
+      return result?.organic;
     } catch (error) {
       return [];
     }
@@ -118,7 +127,7 @@ function TravilySearchToolCallView({
         <div>
           Searching for{" "}
           <span className="font-bold">
-            &quot;{task.payload.input.query}&quot;
+            &quot;{task.payload.input.q}&quot;
           </span>
         </div>
       </div>
@@ -135,17 +144,17 @@ function TravilySearchToolCallView({
             </div>
           </div>
           <ul className="flex flex-col gap-2 text-sm">
-            {results.map((result: { url: string; title: string }, index: number) => (
-              <li key={result.url + "_" + index} className="list-item list-inside pl-6">
+            {results.map((result, index: number) => (
+              <li key={result.link + "_" + index} className="list-item list-inside pl-6">
                 <a
                   className="flex items-center gap-2"
                   target="_blank"
                   rel="noopener noreferrer"
-                  href={result.url}
+                  href={result.link}
                 >
                   <img
                     className="h-4 w-4 rounded-full bg-slate-100 shadow"
-                    src={new URL(result.url).origin + "/favicon.ico"}
+                    src={new URL(result.link).origin + "/favicon.ico"}
                     alt={result.title}
                     onError={(e) => {
                       e.currentTarget.src =

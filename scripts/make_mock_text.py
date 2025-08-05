@@ -111,7 +111,7 @@ mock_data = [
       },
       {
       "type": "tool_call",
-      "tool_name": "tavily_search",
+      "tool_name": "google_search",
         "payload": {
           "query": "What is the capital of France?",
           "result": json.dumps([
@@ -136,7 +136,7 @@ mock_data = [
       },
       {
         "type": "tool_call",
-        "tool_name": "crawl_tool",
+        "tool_name": "scrape",
         "payload": {
           "url": "https://www.google.com",
           "title": "crawl_title"
@@ -154,8 +154,8 @@ mock_data = [
 # 1. browser
 # 2. python_repl_tool
 # 3. bash_tool
-# 4. crawl_tool
-# 5. tavily_search
+# 4. scrape
+# 5. google_search
 def make_tool_call(tool_name: str, payload: dict, streaming_mode: bool = False):
   result = []
   tool_id = str(uuid.uuid4())

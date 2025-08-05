@@ -152,8 +152,10 @@ export class WorkflowEngine {
           if (event.data.delta_input) {
             this.mergeToolCallInput(toolCallTask, event.data.delta_input);
           } else if (event.data.tool_input) {
-            // 覆盖。
-            toolCallTask.payload.input = event.data.tool_input;
+            toolCallTask.payload.input = {
+              ...toolCallTask.payload.input,
+              ...event.data.tool_input,
+            };
           }
 
 

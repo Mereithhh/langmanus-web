@@ -155,7 +155,7 @@ event: tool_call
 data: {"tool_call_id": "afff7d60-490a-422a-bc11-d29f43c6f6b7", "tool_name": "show_text", "tool_input": {"text": "很好，接下来让我搜索一下"}}
 
 event: tool_call
-data: {"tool_call_id": "98d88a1d-3ec2-4be2-8868-244d7fea2fc7", "tool_name": "tavily_search", "tool_input": {"query": "What is the capital of France?", "result": "[{\"title\": \"title 1\", \"url\": \"https://www.google.com\"}, {\"title\": \"title 2\", \"url\": \"https://www.google.com/1\"}]"}}
+data: {"tool_call_id": "98d88a1d-3ec2-4be2-8868-244d7fea2fc7", "tool_name": "google_search", "tool_input": {"query": "What is the capital of France?", "result": "[{\"title\": \"title 1\", \"url\": \"https://www.google.com\"}, {\"title\": \"title 2\", \"url\": \"https://www.google.com/1\"}]"}}
 
 event: tool_call
 data: {"tool_call_id": "894398d6-c9ef-4549-a781-e4e15336afd4", "tool_name": "show_text", "delta_input": {"text": "搜索完毕，看一下具体的页面内容,搜索完毕"}}
@@ -182,7 +182,7 @@ event: tool_call
 data: {"tool_call_id": "894398d6-c9ef-4549-a781-e4e15336afd4", "tool_name": "show_text", "delta_input": {"text": "面内容"}}
 
 event: tool_call
-data: {"tool_call_id": "caa6b9f3-bf8d-4d5b-9c90-9939f5fa96bc", "tool_name": "crawl_tool", "tool_input": {"url": "https://www.google.com", "title": "crawl_title"}}
+data: {"tool_call_id": "caa6b9f3-bf8d-4d5b-9c90-9939f5fa96bc", "tool_name": "scrape", "tool_input": {"url": "https://www.google.com", "title": "crawl_title"}}
 
 event: end_of_llm
 data: {"agent_name": "researcher"}

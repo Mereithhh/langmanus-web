@@ -94,7 +94,7 @@ data: {
 event: tool_call
 data: {
   "tool_call_id": "call_abc123",
-  "tool_name": "tavily_search",
+  "tool_name": "google_search",
   "parameters": {"query": "南京人口", "max_results": 10}
 }
 
@@ -108,14 +108,14 @@ data: {
 ### UI展示位置
 **文件**: `src/app/_components/ToolCallView.tsx`
 
-#### 搜索工具 (`tavily_search`)
+#### 搜索工具 (`google_search`)
 **位置**: `ToolCallView.tsx:89-117`
 **展示**: 
 - 🔍 搜索图标 + "搜索: 关键词"
 - 搜索结果列表：网站图标 + 标题链接 + 内容简介
 - 结果数量统计
 
-#### 网页抓取 (`crawl_tool`)
+#### 网页抓取 (`scrape`)
 **位置**: `ToolCallView.tsx:119-134`
 **展示**: 
 - 🌍 地球图标 + "正在读取: URL"

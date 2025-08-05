@@ -160,8 +160,12 @@ function getStepName(step: WorkflowStep) {
     return step.displayName;
   }
   switch (step.agentName) {
+    case "main":
+      return "Planning"
     case "browser":
       return "Browsing Web";
+    case "browsing":
+      return "Researching"
     case "coder":
       return "Coding";
     case "file_manager":
